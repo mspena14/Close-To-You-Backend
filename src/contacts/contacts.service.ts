@@ -83,7 +83,9 @@ export class ContactsService {
 
   async deleteContact(contactId: string, userId: string): Promise<Contact> {
     const contactFound = await this.getContactById(contactId, userId);
-    await this.contactRepository.delete(contactFound);
+    console.log(contactFound);
+    
+    await this.contactRepository.softRemove(contactFound);
     return contactFound;
   }
   
