@@ -105,6 +105,18 @@ export class ContactsService {
     return this.contactRepository.save(contact);
   }
 
+  async deleteAllContacts(userId: string): Promise<void> {
+    const contacts = await this.contactRepository.find({
+      where: { user: { id: userId } },
+    });
+  
+    if (contacts.length === 0) {
+      throw new NotFoundException('No contacts found for this user.');
+    }
+  
+    await this.contactRepository.softRemove(contacts);
+  }
+  
   async getContactPhoto(contactId: string, userId: string): Promise<string> {
     const contact = await this.getContactById(contactId, userId);
     if (!contact || !contact.photo) {
