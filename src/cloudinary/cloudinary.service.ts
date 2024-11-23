@@ -6,6 +6,8 @@ export class CloudinaryService {
   constructor(@Inject('CLOUDINARY') private cloudinary) {}
 
   async uploadImage(file: Buffer, folder: string = 'contacts'): Promise<UploadApiResponse> {
+    console.log('llega hasta aquí service', file);
+
     if (!file || !file.buffer) {
       throw new BadRequestException('No file uploaded');
     }

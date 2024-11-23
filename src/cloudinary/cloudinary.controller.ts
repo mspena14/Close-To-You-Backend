@@ -16,6 +16,8 @@ import {
     @UseInterceptors(FileInterceptor('file'))
     async uploadImage(@UploadedFile() file: Express.Multer.File): Promise<{ url: string }> {    
       try {
+        console.log('llega hasta aquí controller', file);
+        
         const uploadResult = await this.cloudinaryService.uploadImage(file.buffer);
         return { url: uploadResult.secure_url };
       } catch (error) {
