@@ -19,7 +19,7 @@ export class AuthService {
   ) {}
 
   async login({ email, password }: LoginDto) {
-    try {
+
       const user: User = await this.userService.findOneByEmail(email);
 
       if (!user) {
@@ -42,14 +42,6 @@ export class AuthService {
         email,
         userId,
       };
-    } catch (error) {
-      if (error instanceof QueryFailedError) {
-        throw new QueryFailedError('Bad request', undefined, error);
-      }
-      throw new InternalServerErrorException(
-        error.message || 'Internal server error',
-      );
-    }
   }
 
   async register({ fullName, email, password, phone }: RegisterUserDto) {
