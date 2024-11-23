@@ -8,7 +8,6 @@ export class CreateContactDto {
     name!: string;
 
     @IsOptional()
-    @IsNotEmpty()
     @IsString()
     @IsEmail()
     @Transform(({ value }: {value: string}) => value.trim().toLowerCase())
