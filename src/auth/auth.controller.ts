@@ -1,8 +1,9 @@
 import { RequestWithUser } from 'src/common/interfaces/request-with-user.interface';
-import { Body, Controller, Post, Get, Req } from '@nestjs/common';
+import { Body, Controller, Post, Get, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterUserDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { AuthGuard } from './guard/auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -18,10 +19,17 @@ export class AuthController {
     return this.authService.register(registerDto);
   }
 
+  @UseGuards(AuthGuard)
   @Get('profile')
   profile(@Req() req: RequestWithUser) {
     return this.authService.profile({
       email: req.user.email,
     });
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('validate-token')
+  validateToken() {
+    return { valid: true };
   }
 }
